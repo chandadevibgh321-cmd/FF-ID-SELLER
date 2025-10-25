@@ -12,6 +12,12 @@
         .hidden { display: none; }
         .account-card { cursor: pointer; transition: transform 0.2s; }
         .account-card:hover { transform: translateY(-5px); }
+        .status-pending { color: #fbbf24; }
+        .status-approved { color: #10b981; }
+        .status-rejected { color: #ef4444; }
+        .tab-button { background-color: #4a5568; padding: 8px 16px; border-radius: 6px; cursor: pointer; }
+        .tab-button.active { background-color: #3182ce; }
+        .history-item { border-bottom: 1px solid #4a5568; padding: 12px 0; }
     </style>
 </head>
 <body>
@@ -38,10 +44,12 @@
                 <h1 class="text-xl font-bold">FF ID Store</h1>
                 <p id="user-email" class="text-sm text-gray-400"></p>
             </div>
-            <div>
+            <div class="flex items-center gap-4">
                 <span class="font-bold">Wallet: ₹<span id="wallet-balance">0</span></span>
-                <button id="deposit-btn" class="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-1 px-3 rounded ml-4">Deposit</button>
-                <button id="logout-btn" class="bg-red-600 hover:bg-red-700 text-white font-bold py-1 px-3 rounded ml-2">Logout</button>
+                <button id="history-btn" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-1 px-3 rounded">History</button>
+                <button id="customer-service-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-1 px-3 rounded">Customer Service</button>
+                <button id="deposit-btn" class="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-1 px-3 rounded">Deposit</button>
+                <button id="logout-btn" class="bg-red-600 hover:bg-red-700 text-white font-bold py-1 px-3 rounded">Logout</button>
             </div>
         </header>
 
@@ -53,12 +61,48 @@
         <div class="modal-content">
             <h3 class="text-2xl font-bold mb-4">Deposit Money</h3>
             <p class="mb-4">Scan the QR code to pay. After paying, fill the details below.</p>
-            <img src="https://uploads.onecompiler.io/442ktgsjd/442kse9uk/1000000407.jpg" alt="QR Code" class="mx-auto mb-4 border-4 border-white">
+            <img src="https://uploads.onecompiler.io/442ktgsjd/442kse9uk/1000000407.jpg" alt="QR Code" class="mx-auto mb-4 border-4 border-white max-w-xs">
+            
+            <div class="mb-4">
+                <label class="block mb-2">Payment Method:</label>
+                <div class="flex gap-4">
+                    <button class="payment-method flex-1 bg-gray-700 hover:bg-gray-600 p-3 rounded" data-method="UPI">UPI</button>
+                    <button class="payment-method flex-1 bg-gray-700 hover:bg-gray-600 p-3 rounded" data-method="Bank Transfer">Bank Transfer</button>
+                    <button class="payment-method flex-1 bg-gray-700 hover:bg-gray-600 p-3 rounded" data-method="Other">Other</button>
+                </div>
+            </div>
+            
             <input type="text" id="payer-name" placeholder="Name you paid with" class="w-full p-2 mb-3 rounded bg-gray-700 border border-gray-600">
             <input type="text" id="utr-id" placeholder="UTR/Transaction ID" class="w-full p-2 mb-3 rounded bg-gray-700 border border-gray-600">
-            <input type="number" id="deposit-amount" placeholder="Amount Paid" class="w-full p-2 mb-4 rounded bg-gray-700 border border-gray-600">
+            <input type="number" id="deposit-amount" placeholder="Amount Paid" class="w-full p-2 mb-3 rounded bg-gray-700 border border-gray-600">
+            
+            <div class="mb-4">
+                <label class="block mb-2">Deposit Proof Screenshot:</label>
+                <input type="file" id="deposit-proof" accept="image/*" class="w-full p-2 rounded bg-gray-700 border border-gray-600">
+                <p class="text-sm text-gray-400 mt-1">Upload a screenshot of your payment confirmation</p>
+            </div>
+            
             <button id="submit-deposit-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit Request</button>
             <button onclick="closeModal('deposit-modal')" class="w-full mt-2 bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Close</button>
+        </div>
+    </div>
+
+    <div id="history-modal" class="modal">
+        <div class="modal-content">
+            <h3 class="text-2xl font-bold mb-4">Deposit History</h3>
+            
+            <div class="flex gap-2 mb-4">
+                <button class="tab-button active" data-tab="all">All</button>
+                <button class="tab-button" data-tab="pending">Pending</button>
+                <button class="tab-button" data-tab="approved">Approved</button>
+                <button class="tab-button" data-tab="rejected">Rejected</button>
+            </div>
+            
+            <div id="history-list" class="max-h-96 overflow-y-auto">
+                <!-- History items will be populated here -->
+            </div>
+            
+            <button onclick="closeModal('history-modal')" class="w-full mt-4 bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Close</button>
         </div>
     </div>
 
@@ -93,25 +137,17 @@
         // 🔥 CORRECT FIREBASE CONFIG FOR FF ID STORE
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-        import { getDatabase, ref, set, get, onValue, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+        import { getDatabase, ref, set, get, onValue, remove, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
         const firebaseConfig = {
-
-  apiKey: "AIzaSyC6V_YBPPQbpteD-p069AcqlXS1YQy4Ozs",
-
-  authDomain: "ff-id-seller-acb19.firebaseapp.com",
-
-  databaseURL: "https://ff-id-seller-acb19-default-rtdb.firebaseio.com",
-
-  projectId: "ff-id-seller-acb19",
-
-  storageBucket: "ff-id-seller-acb19.firebasestorage.app",
-
-  messagingSenderId: "691395345107",
-
-  appId: "1:691395345107:web:cec0e29a16514e656fb226"
-
-};
+            apiKey: "AIzaSyC6V_YBPPQbpteD-p069AcqlXS1YQy4Ozs",
+            authDomain: "ff-id-seller-acb19.firebaseapp.com",
+            databaseURL: "https://ff-id-seller-acb19-default-rtdb.firebaseio.com",
+            projectId: "ff-id-seller-acb19",
+            storageBucket: "ff-id-seller-acb19.firebasestorage.app",
+            messagingSenderId: "691395345107",
+            appId: "1:691395345107:web:cec0e29a16514e656fb226"
+        };
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
@@ -124,10 +160,13 @@
         const walletBalanceEl = document.getElementById('wallet-balance');
         const accountsContainer = document.getElementById('accounts-container');
         const detailsModal = document.getElementById('details-modal');
+        const historyModal = document.getElementById('history-modal');
 
         let currentUser = null;
         let userWallet = 0;
         let isWalletSystemDisabled = false;
+        let selectedPaymentMethod = "UPI";
+        let customerServiceLink = "https://wa.me/919876543210"; // Default customer service link
 
         // 🔥 FIXED: Auth State Listener
         onAuthStateChanged(auth, (user) => {
@@ -140,6 +179,7 @@
                 listenToWallet();
                 listenToSettings();
                 loadAccounts();
+                loadCustomerServiceLink();
             } else {
                 currentUser = null;
                 authSection.classList.remove('hidden');
@@ -213,6 +253,40 @@
             console.log('Logged out');
         });
 
+        // Customer Service Button
+        document.getElementById('customer-service-btn').addEventListener('click', () => {
+            window.open(customerServiceLink, '_blank');
+        });
+
+        // History Button
+        document.getElementById('history-btn').addEventListener('click', () => {
+            showHistoryModal();
+        });
+
+        // Payment Method Selection
+        document.querySelectorAll('.payment-method').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.payment-method').forEach(btn => {
+                    btn.classList.remove('bg-blue-600');
+                    btn.classList.add('bg-gray-700');
+                });
+                button.classList.remove('bg-gray-700');
+                button.classList.add('bg-blue-600');
+                selectedPaymentMethod = button.dataset.method;
+            });
+        });
+
+        // Tab Switching in History Modal
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.tab-button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                button.classList.add('active');
+                loadHistoryItems(button.dataset.tab);
+            });
+        });
+
         // Close Modal Function
         function closeModal(modalId) {
             document.getElementById(modalId).style.display = 'none';
@@ -230,6 +304,15 @@
             const settingsRef = ref(db, `settings/isWalletDisabled`);
             onValue(settingsRef, (snapshot) => {
                 isWalletSystemDisabled = snapshot.val() === true;
+            });
+        }
+
+        function loadCustomerServiceLink() {
+            const serviceLinkRef = ref(db, `settings/customerServiceLink`);
+            onValue(serviceLinkRef, (snapshot) => {
+                if (snapshot.exists()) {
+                    customerServiceLink = snapshot.val();
+                }
             });
         }
 
@@ -353,11 +436,21 @@
             const name = document.getElementById('payer-name').value.trim();
             const utr = document.getElementById('utr-id').value.trim();
             const amount = parseFloat(document.getElementById('deposit-amount').value);
+            const proofFile = document.getElementById('deposit-proof').files[0];
 
             if (!name || !utr || !amount || amount <= 0) {
                 alert('Please fill all fields correctly.');
                 return;
             }
+
+            if (!proofFile) {
+                alert('Please upload a deposit proof screenshot.');
+                return;
+            }
+
+            // In a real app, you would upload the file to Firebase Storage
+            // For this demo, we'll just store the file name
+            const proofFileName = proofFile.name;
 
             const requestId = `req_${Date.now()}`;
             const requestRef = ref(db, `depositRequests/${requestId}`);
@@ -367,6 +460,9 @@
                 payerName: name,
                 utr: utr,
                 amount: amount,
+                paymentMethod: selectedPaymentMethod,
+                proofFileName: proofFileName,
+                status: 'pending',
                 timestamp: new Date().toISOString()
             }).then(() => {
                 alert('✅ Deposit request sent! Admin will approve soon.');
@@ -374,13 +470,75 @@
                 document.getElementById('payer-name').value = '';
                 document.getElementById('utr-id').value = '';
                 document.getElementById('deposit-amount').value = '';
+                document.getElementById('deposit-proof').value = '';
             }).catch(err => {
                 console.error(err);
                 alert('Error: ' + err.message);
             });
         });
 
+        function showHistoryModal() {
+            historyModal.style.display = 'block';
+            loadHistoryItems('all');
+        }
+
+        function loadHistoryItems(filter = 'all') {
+            const historyList = document.getElementById('history-list');
+            historyList.innerHTML = '<p class="text-center py-4">Loading...</p>';
+
+            const historyRef = ref(db, 'depositRequests');
+            get(historyRef).then((snapshot) => {
+                historyList.innerHTML = '';
+                const data = snapshot.val();
+                
+                if (!data) {
+                    historyList.innerHTML = '<p class="text-center py-4">No deposit history found.</p>';
+                    return;
+                }
+
+                let hasItems = false;
+                
+                Object.entries(data).forEach(([key, value]) => {
+                    if (value.userId === currentUser.uid) {
+                        if (filter === 'all' || value.status === filter) {
+                            hasItems = true;
+                            const historyItem = document.createElement('div');
+                            historyItem.className = 'history-item';
+                            
+                            const date = new Date(value.timestamp).toLocaleString();
+                            const statusClass = `status-${value.status}`;
+                            
+                            historyItem.innerHTML = `
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <p class="font-semibold">₹${value.amount}</p>
+                                        <p class="text-sm text-gray-400">${date}</p>
+                                        <p class="text-sm">UTR: ${value.utr}</p>
+                                        <p class="text-sm">Method: ${value.paymentMethod}</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="font-semibold ${statusClass}">${value.status.toUpperCase()}</p>
+                                        ${value.adminNote ? `<p class="text-sm text-gray-400">Note: ${value.adminNote}</p>` : ''}
+                                    </div>
+                                </div>
+                            `;
+                            
+                            historyList.appendChild(historyItem);
+                        }
+                    }
+                });
+                
+                if (!hasItems) {
+                    historyList.innerHTML = `<p class="text-center py-4">No ${filter} deposits found.</p>`;
+                }
+            }).catch(err => {
+                console.error(err);
+                historyList.innerHTML = '<p class="text-center py-4 text-red-400">Error loading history.</p>';
+            });
+        }
+
         console.log('🚀 FF ID Store Loaded Successfully!');
     </script>
 </body>
 </html>
+

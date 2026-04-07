@@ -2,14 +2,14 @@
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>SMART STUDY - छात्र पोर्टल</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --primary-bg: #0F172A;
             --secondary-bg: #1E293B;
@@ -43,8 +43,7 @@
         .header-left { display: flex; align-items: center; gap: 12px; }
         .header-logo { width: 40px; height: 40px; border-radius: 12px; object-fit: cover; }
         .header-title { font-weight: 600; font-size: 1rem; color: var(--text-primary); }
-        .theme-toggle { background: rgba(255,255,255,0.1); border: none; color: var(--text-primary); font-size: 1.3rem; cursor: pointer; padding: 8px 12px; border-radius: 30px; transition: 0.3s; }
-        .theme-toggle:hover { background: rgba(255,255,255,0.2); }
+        .theme-toggle { background: rgba(255,255,255,0.1); border: none; color: var(--text-primary); font-size: 1.3rem; cursor: pointer; padding: 8px 12px; border-radius: 30px; }
         .bottom-nav {
             position: fixed; bottom: 0; left: 0; width: 100%; height: 70px;
             background: var(--secondary-bg); backdrop-filter: blur(10px);
@@ -54,11 +53,11 @@
         .nav-item {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             gap: 4px; color: var(--text-secondary); cursor: pointer;
-            padding: 8px 20px; border-radius: 30px; transition: 0.3s;
+            padding: 8px 20px; border-radius: 30px;
         }
         .nav-item i { font-size: 1.5rem; }
         .nav-item span { font-size: 0.7rem; font-weight: 500; }
-        .nav-item.active { color: var(--accent-color); background: rgba(250, 204, 21, 0.15); }
+        .nav-item.active { color: var(--accent-color); background: rgba(250,204,21,0.15); }
         .main-content { padding: 20px; margin-top: 65px; margin-bottom: 70px; }
         .section { display: none; animation: fadeIn 0.3s ease; }
         .section.active { display: block; }
@@ -67,48 +66,42 @@
             max-width: 420px; margin: 60px auto; background: rgba(255,255,255,0.1);
             backdrop-filter: blur(20px); border-radius: 32px; padding: 40px 32px;
             text-align: center; box-shadow: 0 25px 45px rgba(0,0,0,0.2);
-            border: 1px solid rgba(255,255,255,0.2); animation: fadeInUp 0.6s ease;
+            border: 1px solid rgba(255,255,255,0.2);
         }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         .smart-logo i { font-size: 60px; background: linear-gradient(135deg, #fff, #f0f0f0); -webkit-background-clip: text; background-clip: text; color: transparent; }
         .smart-logo h2 { color: white; margin-top: 12px; font-weight: 800; font-size: 1.8rem; }
         .login-card h3 { color: white; margin: 25px 0 15px; font-weight: 600; }
         .login-card input {
             width: 100%; padding: 14px 20px; margin: 10px 0; border: none;
             border-radius: 50px; font-size: 15px; background: rgba(255,255,255,0.95);
-            transition: 0.3s;
         }
-        .login-card input:focus { outline: none; box-shadow: 0 0 0 3px rgba(250,204,21,0.3); transform: translateY(-2px); }
         .login-card button {
             width: 100%; padding: 14px; background: var(--accent-gradient);
             color: #1a1a2e; border: none; border-radius: 50px; font-size: 18px;
-            font-weight: 700; cursor: pointer; margin-top: 15px; transition: 0.3s;
+            font-weight: 700; cursor: pointer; margin-top: 15px;
         }
-        .login-card button:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(250,204,21,0.3); }
-        .toggle-link { color: #FACC15; cursor: pointer; margin-top: 20px; display: inline-block; font-size: 0.9rem; font-weight: 500; }
-        .toggle-link:hover { text-decoration: underline; }
+        .toggle-link { color: #FACC15; cursor: pointer; margin-top: 20px; display: inline-block; font-size: 0.9rem; }
         .error-msg { color: #ff6b6b; margin-top: 15px; font-size: 0.85rem; }
-        .custom-card { background: var(--card-bg); border-radius: 24px; padding: 20px; margin-bottom: 16px; border: 1px solid var(--border-color); transition: 0.3s; }
+        .custom-card { background: var(--card-bg); border-radius: 24px; padding: 20px; margin-bottom: 16px; border: 1px solid var(--border-color); }
         .section-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; color: var(--text-primary); }
         .test-card {
             background: var(--card-bg); border-radius: 20px; padding: 18px; margin-bottom: 14px;
-            border: 1px solid var(--border-color); cursor: pointer; transition: 0.3s;
+            border: 1px solid var(--border-color); cursor: pointer;
         }
         .test-card:hover { transform: translateX(6px); border-color: var(--accent-color); }
         .test-name { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); }
         .test-meta { font-size: 0.75rem; color: var(--text-secondary); display: flex; gap: 16px; margin: 10px 0; }
-        .badge-available { background: linear-gradient(135deg, #10B981, #059669); color: white; padding: 4px 14px; border-radius: 50px; font-size: 0.7rem; font-weight: 600; display: inline-block; }
+        .badge-available { background: linear-gradient(135deg, #10B981, #059669); color: white; padding: 4px 14px; border-radius: 50px; font-size: 0.7rem; display: inline-block; }
         .profile-avatar { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid var(--accent-color); margin-bottom: 16px; }
         .profile-stats { display: flex; justify-content: space-around; margin: 20px 0; gap: 12px; }
         .stat-item { text-align: center; flex: 1; background: rgba(255,255,255,0.05); padding: 12px; border-radius: 16px; }
         .stat-item strong { font-size: 1.4rem; display: block; color: var(--accent-color); }
-        .stat-item span { color: var(--text-secondary); font-size: 0.75rem; }
         .leaderboard-filters { display: flex; gap: 12px; margin-bottom: 20px; }
         .filter-btn {
             flex: 1; padding: 10px 16px; background: var(--secondary-bg);
             border: 1px solid var(--border-color); border-radius: 40px;
             color: var(--text-secondary); cursor: pointer; font-size: 0.85rem;
-            font-weight: 600; transition: 0.3s;
+            font-weight: 600;
         }
         .filter-btn.active { background: var(--accent-gradient); color: #1a1a2e; border-color: transparent; }
         .leaderboard-item {
@@ -120,13 +113,12 @@
         .avatar-placeholder {
             width: 40px; height: 40px; border-radius: 50%;
             background: var(--accent-gradient); display: flex; align-items: center;
-            justify-content: center; color: #1a1a2e; font-weight: bold; font-size: 1.1rem;
+            justify-content: center; color: #1a1a2e; font-weight: bold;
         }
         .rank-1 { background: linear-gradient(135deg, #FFD70020, transparent); border-left: 4px solid #FFD700; padding-left: 16px; border-radius: 12px; margin-left: -4px; }
         .rank-2 { background: linear-gradient(135deg, #C0C0C020, transparent); border-left: 4px solid #C0C0C0; padding-left: 16px; border-radius: 12px; margin-left: -4px; }
         .rank-3 { background: linear-gradient(135deg, #CD7F3220, transparent); border-left: 4px solid #CD7F32; padding-left: 16px; border-radius: 12px; margin-left: -4px; }
-        .history-item { cursor: pointer; transition: 0.3s; }
-        .history-item:hover { transform: translateX(6px); border-left-color: var(--accent-color); }
+        .history-item { cursor: pointer; }
         .timer { text-align: center; font-size: 2.2rem; font-weight: 800; color: var(--danger); margin-bottom: 20px; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 60px; }
         .progress-bar { background: var(--border-color); border-radius: 50px; height: 8px; margin-bottom: 24px; overflow: hidden; }
         .progress-fill { background: linear-gradient(90deg, var(--success), #34D399); width: 0%; height: 100%; transition: width 0.3s; }
@@ -135,42 +127,52 @@
         .option {
             padding: 14px 20px; margin: 10px 0; background: var(--card-bg);
             border-radius: 60px; cursor: pointer; border: 1px solid var(--border-color);
-            transition: 0.3s; color: var(--text-primary); font-weight: 500;
+            color: var(--text-primary); font-weight: 500;
         }
-        .option:hover { background: rgba(255,255,255,0.1); transform: translateX(6px); }
         .option.selected { background: var(--accent-gradient); color: #1a1a2e; border-color: transparent; }
         .nav-buttons { display: flex; justify-content: space-between; margin-top: 24px; }
-        .nav-buttons button { padding: 12px 28px; background: var(--primary-button); color: white; border: none; border-radius: 60px; cursor: pointer; font-weight: 600; transition: 0.3s; }
-        .nav-buttons button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(59,130,246,0.3); }
-        .submit-btn { width: 100%; padding: 14px; background: linear-gradient(90deg, var(--success), #34D399); color: white; border: none; border-radius: 60px; font-weight: 700; margin-top: 20px; cursor: pointer; transition: 0.3s; }
-        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(16,185,129,0.3); }
+        .nav-buttons button { padding: 12px 28px; background: var(--primary-button); color: white; border: none; border-radius: 60px; cursor: pointer; }
+        .submit-btn { width: 100%; padding: 14px; background: linear-gradient(90deg, var(--success), #34D399); color: white; border: none; border-radius: 60px; font-weight: 700; margin-top: 20px; cursor: pointer; }
         .share-buttons { display: flex; gap: 12px; margin-top: 20px; }
         .share-buttons button { flex: 1; padding: 10px; border-radius: 60px; font-size: 0.85rem; font-weight: 600; }
-        .no-data { text-align: center; padding: 50px; color: var(--text-secondary); font-size: 0.9rem; }
+        .no-data { text-align: center; padding: 50px; color: var(--text-secondary); }
         .result-modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.9); backdrop-filter: blur(8px); z-index: 3000; overflow-y: auto; padding: 20px;
         }
         .result-modal-content { background: var(--card-bg); border-radius: 28px; padding: 24px; max-width: 650px; margin: 40px auto; border: 1px solid var(--border-color); }
         .result-modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border-color); }
-        .close-modal { background: var(--danger); color: white; border: none; border-radius: 50%; width: 32px; height: 32px; cursor: pointer; font-size: 1rem; transition: 0.3s; }
-        .close-modal:hover { transform: scale(1.1); }
+        .close-modal { background: var(--danger); color: white; border: none; border-radius: 50%; width: 32px; height: 32px; cursor: pointer; }
         .result-question { padding: 14px; margin: 12px 0; border-radius: 16px; background: rgba(0,0,0,0.2); }
         .result-correct { border-left: 4px solid var(--success); }
         .result-wrong { border-left: 4px solid var(--danger); }
         .swiper-container { width: 100%; height: 200px; border-radius: 20px; margin-bottom: 20px; }
         .swiper-slide img { width: 100%; height: 100%; object-fit: cover; border-radius: 20px; }
-        .swiper-pagination-bullet { background: white; }
-        .swiper-pagination-bullet-active { background: var(--accent-color); }
+        .loading-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7); z-index: 9999; display: none;
+            justify-content: center; align-items: center; flex-direction: column;
+        }
+        .loading-spinner {
+            width: 50px; height: 50px; border: 4px solid var(--border-color);
+            border-top-color: var(--accent-color); border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-text { color: white; margin-top: 15px; font-size: 1rem; }
         @media (max-width: 480px) {
             .main-content { padding: 16px; }
             .login-card { margin: 30px 20px; padding: 32px 24px; }
             .profile-avatar { width: 70px; height: 70px; }
-            .filter-btn { padding: 8px 12px; font-size: 0.75rem; }
         }
     </style>
 </head>
 <body>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">⏳ कृपया प्रतीक्षा करें...</div>
+    </div>
+
     <header class="app-header" id="appHeader" style="display: none;">
         <div class="header-left">
             <img src="" alt="Logo" class="header-logo" id="appLogo">
@@ -208,7 +210,7 @@
             <div id="leaderboardSection" class="section">
                 <div class="section-title"><i class="bi bi-trophy-fill"></i> लीडरबोर्ड</div>
                 <div class="leaderboard-filters">
-                    <button class="filter-btn" data-period="all">🏆 ऑल टाइम</button>
+                    <button class="filter-btn active" data-period="all">🏆 ऑल टाइम</button>
                     <button class="filter-btn" data-period="weekly">📅 वीकली</button>
                     <button class="filter-btn" data-period="monthly">📆 मंथली</button>
                 </div>
@@ -246,7 +248,6 @@
         </nav>
     </div>
 
-    <!-- Result Modal -->
     <div id="resultModal" class="result-modal">
         <div class="result-modal-content">
             <div class="result-modal-header">
@@ -259,14 +260,14 @@
 
     <div id="examPage" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15,23,42,0.98); z-index:2000; overflow-y:auto; padding:16px;">
         <div class="custom-card">
-            <button class="btn" style="background:var(--text-secondary); color:white; padding:10px 20px; margin-bottom:16px; border:none; border-radius:50px; cursor:pointer;" onclick="closeExam()"><i class="bi bi-arrow-left"></i> वापस</button>
+            <button class="btn" style="background:var(--text-secondary); color:white; padding:10px 20px; margin-bottom:16px; border:none; border-radius:50px;" onclick="closeExam()"><i class="bi bi-arrow-left"></i> वापस</button>
             <h2 id="testName" style="font-size:1.3rem; color:var(--text-primary);"></h2>
             <div class="timer" id="timer">⏱️ 90:00</div>
             <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
             <div id="questionContainer"></div>
             <div class="nav-buttons">
                 <button onclick="prevQuestion()"><i class="bi bi-chevron-left"></i> पिछला</button>
-                <span id="qCounter" style="padding:8px; color:var(--text-primary); font-weight:600;">प्रश्न 1 / 0</span>
+                <span id="qCounter" style="padding:8px; color:var(--text-primary);">प्रश्न 1 / 0</span>
                 <button onclick="nextQuestion()">अगला <i class="bi bi-chevron-right"></i></button>
             </div>
             <button class="submit-btn" onclick="submitExam()"><i class="bi bi-check-circle"></i> टेस्ट सबमिट करें</button>
@@ -277,8 +278,6 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyDBxkEXfCDbvOCPKPIjCbSS3V2M6QOIKUY",
@@ -297,6 +296,10 @@
         let swiperInstance = null, allResults = [];
         let currentLeaderboardPeriod = 'all';
 
+        function showLoading(show) {
+            document.getElementById('loadingOverlay').style.display = show ? 'flex' : 'none';
+        }
+
         function toggleTheme() { 
             document.body.classList.toggle('light'); 
             localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
@@ -314,18 +317,22 @@
         async function login() {
             const email = document.getElementById('email').value.trim(), password = document.getElementById('password').value;
             if(!email || !password) { showError('सब भरें'); return; }
+            showLoading(true);
             try { await auth.signInWithEmailAndPassword(email, password); } catch(e) { showError(e.message); }
+            showLoading(false);
         }
 
         async function signup() {
             const username = document.getElementById('username').value.trim(), email = document.getElementById('email').value.trim(), password = document.getElementById('password').value, fullName = document.getElementById('fullName').value.trim();
             if(!username || !email || !password || !fullName) { showError('सब भरें'); return; }
             if(password.length < 6) { showError('पासवर्ड 6+ अक्षर'); return; }
+            showLoading(true);
             try {
                 const cred = await auth.createUserWithEmailAndPassword(email, password);
                 await db.ref('users/' + cred.user.uid).set({ username, email, fullName, totalTests: 0, avgScore: 0, bestScore: 0, badges: [], createdAt: Date.now() });
                 alert('अकाउंट बन गया! अब लॉगिन करें'); toggleAuthMode();
             } catch(e) { showError(e.message); }
+            showLoading(false);
         }
 
         function toggleAuthMode() {
@@ -345,7 +352,7 @@
             document.querySelectorAll('#bottomNav .nav-item').forEach(n => n.classList.remove('active'));
             document.querySelector(`#bottomNav .nav-item[data-section="${sectionId}"]`).classList.add('active');
             if(sectionId === 'homeSection') { loadPromotions(); loadAnnouncements(); loadLiveClass(); loadAvailableTests(); loadNotes(); }
-            if(sectionId === 'leaderboardSection') loadLeaderboardByPeriod(currentLeaderboardPeriod);
+            if(sectionId === 'leaderboardSection') loadLeaderboard();
             if(sectionId === 'profileSection') loadProfile();
         }
 
@@ -358,15 +365,15 @@
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 currentLeaderboardPeriod = btn.dataset.period;
-                loadLeaderboardByPeriod(currentLeaderboardPeriod);
+                loadLeaderboard();
             });
         });
 
-        async function loadLeaderboardByPeriod(period) {
+        async function loadLeaderboard() {
             const usersSnap = await db.ref('users').once('value');
             let users = [];
             
-            if(period === 'all') {
+            if(currentLeaderboardPeriod === 'all') {
                 usersSnap.forEach(u => { 
                     const data = u.val(); 
                     if(data.avgScore !== undefined && data.avgScore > 0) {
@@ -388,8 +395,8 @@
                     const result = r.val();
                     const resultDate = result.submittedAt;
                     let include = false;
-                    if(period === 'weekly' && resultDate >= weekAgo) include = true;
-                    if(period === 'monthly' && resultDate >= monthAgo) include = true;
+                    if(currentLeaderboardPeriod === 'weekly' && resultDate >= weekAgo) include = true;
+                    if(currentLeaderboardPeriod === 'monthly' && resultDate >= monthAgo) include = true;
                     
                     if(include && result.userId) {
                         if(!userScores[result.userId]) {
@@ -428,9 +435,9 @@
                     html += `<div class="leaderboard-item ${rankClass}">
                         <div class="leaderboard-user">
                             ${avatarHtml}
-                            <span style="color:var(--text-primary);"><strong>${idx+1}.</strong> ${u.name}</span>
+                            <span><strong>${idx+1}.</strong> ${u.name}</span>
                         </div>
-                        <span style="color:var(--text-primary);">⭐ ${u.avgScore.toFixed(1)}%</span>
+                        <span>⭐ ${u.avgScore.toFixed(1)}%</span>
                     </div>`;
                 });
             }
@@ -454,7 +461,7 @@
             if(activePromos.length > 0) {
                 activePromos.forEach(promo => {
                     const slide = document.createElement('div'); slide.className = 'swiper-slide';
-                    slide.innerHTML = promo.link ? `<a href="${promo.link}" target="_blank"><img src="${promo.imageUrl}" alt="Promo" style="width:100%; height:100%; object-fit:cover;"></a>` : `<img src="${promo.imageUrl}" alt="Promo" style="width:100%; height:100%; object-fit:cover;">`;
+                    slide.innerHTML = promo.link ? `<a href="${promo.link}" target="_blank"><img src="${promo.imageUrl}" alt="Promo"></a>` : `<img src="${promo.imageUrl}" alt="Promo">`;
                     swiperWrapper.appendChild(slide);
                 });
                 if(swiperInstance) swiperInstance.destroy(true, true);
@@ -467,7 +474,7 @@
         async function loadAnnouncements() {
             const snap = await db.ref('announcements').once('value');
             let html = '';
-            snap.forEach(a => { const d = a.val(); html += `<div class="custom-card" style="border-left:4px solid var(--warning);"><strong><i class="bi bi-megaphone-fill"></i> ${d.title}</strong><br>${d.text}<br><small style="color:var(--text-secondary);">${new Date(d.date).toLocaleString()}</small></div>`; });
+            snap.forEach(a => { const d = a.val(); html += `<div class="custom-card" style="border-left:4px solid var(--warning);"><strong><i class="bi bi-megaphone-fill"></i> ${d.title}</strong><br>${d.text}<br><small>${new Date(d.date).toLocaleString()}</small></div>`; });
             document.getElementById('announcementsBox').innerHTML = html || '<div class="custom-card">कोई नोटिस नहीं</div>';
         }
 
@@ -475,14 +482,14 @@
             const snap = await db.ref('liveClass').once('value');
             const data = snap.val();
             if(data && data.link) {
-                document.getElementById('liveClassBox').innerHTML = `<strong><i class="bi bi-camera-video-fill"></i> लाइव क्लास</strong><br>${data.title || 'क्लास शुरू होने वाली है'}<br><a href="${data.link}" target="_blank" class="btn" style="background:var(--primary-button); color:white; padding:8px 16px; border-radius:50px; display:inline-block; margin-top:8px;">क्लास जॉइन करें <i class="bi bi-box-arrow-up-right"></i></a>`;
+                document.getElementById('liveClassBox').innerHTML = `<strong><i class="bi bi-camera-video-fill"></i> लाइव क्लास</strong><br>${data.title || 'क्लास शुरू होने वाली है'}<br><a href="${data.link}" target="_blank" style="background:var(--primary-button); color:white; padding:8px 16px; border-radius:50px; display:inline-block; margin-top:8px; text-decoration:none;">क्लास जॉइन करें <i class="bi bi-box-arrow-up-right"></i></a>`;
             } else document.getElementById('liveClassBox').innerHTML = '<strong><i class="bi bi-camera-video-fill"></i> लाइव क्लास</strong><br>कोई लाइव क्लास शेड्यूल नहीं';
         }
 
         async function loadNotes() {
             const snap = await db.ref('notes').once('value');
             let html = '';
-            snap.forEach(n => { const note = n.val(); html += `<div class="custom-card"><strong><i class="bi bi-link-45deg text-danger"></i> ${note.title}</strong><br><small>${note.description || ''}</small><br><a href="${note.fileUrl}" target="_blank" class="btn" style="background:var(--primary-button); color:white; padding:6px 12px; border-radius:50px; display:inline-block; margin-top:8px; font-size:0.8rem;"><i class="bi bi-eye"></i> खोलें / डाउनलोड करें</a></div>`; });
+            snap.forEach(n => { const note = n.val(); html += `<div class="custom-card"><strong><i class="bi bi-link-45deg text-danger"></i> ${note.title}</strong><br><small>${note.description || ''}</small><br><a href="${note.fileUrl}" target="_blank" style="background:var(--primary-button); color:white; padding:6px 12px; border-radius:50px; display:inline-block; margin-top:8px; font-size:0.8rem; text-decoration:none;"><i class="bi bi-eye"></i> खोलें / डाउनलोड करें</a></div>`; });
             document.getElementById('notesList').innerHTML = html || '<div class="custom-card">कोई नोट्स उपलब्ध नहीं</div>';
         }
 
@@ -536,10 +543,10 @@
             
             let badges = userData.badges || [];
             let badgeHtml = '';
-            if(badges.includes('gold')) badgeHtml += '<span class="badge" style="background:#FFD700; color:#1a1a2e; padding:4px 10px; border-radius:20px; margin:2px;">🏅 गोल्ड</span>';
-            if(badges.includes('silver')) badgeHtml += '<span class="badge" style="background:#C0C0C0; color:#1a1a2e; padding:4px 10px; border-radius:20px; margin:2px;">🥈 सिल्वर</span>';
-            if(badges.includes('bronze')) badgeHtml += '<span class="badge" style="background:#CD7F32; color:white; padding:4px 10px; border-radius:20px; margin:2px;">🥉 ब्रॉन्ज</span>';
-            if(badges.includes('iron')) badgeHtml += '<span class="badge" style="background:#4B5563; color:white; padding:4px 10px; border-radius:20px; margin:2px;">🔥 आयरन</span>';
+            if(badges.includes('gold')) badgeHtml += '<span style="background:#FFD700; color:#1a1a2e; padding:4px 10px; border-radius:20px; margin:2px; display:inline-block;">🏅 गोल्ड</span>';
+            if(badges.includes('silver')) badgeHtml += '<span style="background:#C0C0C0; color:#1a1a2e; padding:4px 10px; border-radius:20px; margin:2px; display:inline-block;">🥈 सिल्वर</span>';
+            if(badges.includes('bronze')) badgeHtml += '<span style="background:#CD7F32; color:white; padding:4px 10px; border-radius:20px; margin:2px; display:inline-block;">🥉 ब्रॉन्ज</span>';
+            if(badges.includes('iron')) badgeHtml += '<span style="background:#4B5563; color:white; padding:4px 10px; border-radius:20px; margin:2px; display:inline-block;">🔥 आयरन</span>';
             document.getElementById('badgesEarned').innerHTML = badgeHtml || 'कोई बैज नहीं';
             
             let avg = userData.avgScore || 0;
@@ -557,12 +564,12 @@
             resultsSnap.forEach(r => { 
                 const result = r.val();
                 allResults.push(result);
-                const resultData = JSON.stringify(result).replace(/'/g, "&apos;");
+                const resultStr = JSON.stringify(result).replace(/'/g, "&apos;");
                 html += `<div class="custom-card history-item">
-                    <strong style="color:var(--text-primary);">${result.testName}</strong><br>
-                    <span style="color:var(--text-primary);">स्कोर: ${result.score}/${result.total} (${result.percent.toFixed(1)}%)</span><br>
-                    <small style="color:var(--text-secondary);">${new Date(result.submittedAt).toLocaleString()}</small>
-                    <div class="mt-2"><button class="btn" style="background:var(--primary-button); color:white; padding:4px 12px; border-radius:20px; font-size:0.7rem;" onclick='showResultDetails(${resultData})'><i class="bi bi-eye"></i> See Results</button></div>
+                    <strong>${result.testName}</strong><br>
+                    स्कोर: ${result.score}/${result.total} (${result.percent.toFixed(1)}%)<br>
+                    <small>${new Date(result.submittedAt).toLocaleString()}</small>
+                    <div class="mt-2"><button class="btn" style="background:var(--primary-button); color:white; padding:4px 12px; border-radius:20px; font-size:0.7rem;" onclick='showResultDetails(${resultStr})'><i class="bi bi-eye"></i> See Results</button></div>
                 </div>`;
             });
             document.getElementById('testHistoryList').innerHTML = html || '<div class="custom-card">कोई टेस्ट नहीं दिया</div>';
@@ -576,7 +583,7 @@
                 const correctAns = result.correctAnswers[i];
                 const isCorrect = result.answers[i] === correctAns;
                 html += `<div class="result-question ${isCorrect ? 'result-correct' : 'result-wrong'}">
-                    <strong style="color:var(--text-primary);">प्रश्न ${i+1}:</strong> ${result.questions[i]}<br>
+                    <strong>प्रश्न ${i+1}:</strong> ${result.questions[i]}<br>
                     <span style="color:${isCorrect ? 'var(--success)' : 'var(--danger)'}">👉 आपका उत्तर: ${userAns}</span><br>
                     <span style="color:var(--success);">✅ सही उत्तर: ${correctAns}</span>
                 </div>`;
@@ -592,7 +599,7 @@
         async function shareResultAsImage() {
             if(allResults.length === 0) { alert('कोई रिजल्ट नहीं'); return; }
             let latest = allResults[0];
-            let html = `<div style="padding:20px; text-align:center; background:white; color:black; font-family:sans-serif;">
+            let html = `<div style="padding:20px; text-align:center; background:white; color:black;">
                 <h2>SMART STUDY</h2>
                 <h3>🎯 टेस्ट रिजल्ट</h3>
                 <p><strong>नाम:</strong> ${document.getElementById('profileName').innerText}</p>
@@ -620,6 +627,7 @@
 
         async function startTest(testKey, testName, testTime) {
             currentTestId = testKey;
+            showLoading(true);
             const testSnap = await db.ref(`tests/${testKey}`).once('value');
             const test = testSnap.val();
             questions = []; 
@@ -632,6 +640,7 @@
             currentQ = 0;
             document.getElementById('testName').innerHTML = `<i class="bi bi-file-text"></i> ${testName}`;
             document.getElementById('examPage').style.display = 'block';
+            showLoading(false);
             startTimer();
             renderQuestion();
         }
@@ -671,6 +680,7 @@
 
         async function submitExam() {
             if(confirm('सबमिट करें? बाद में बदलाव नहीं होंगे')) {
+                showLoading(true);
                 clearInterval(timerInterval);
                 let score = 0;
                 let correctAnswers = [];
@@ -683,7 +693,6 @@
                 const percent = (score/questions.length)*100;
                 const user = auth.currentUser;
                 
-                // Save result
                 await db.ref('results').push({ 
                     userId: user.uid, 
                     testId: currentTestId, 
@@ -697,7 +706,6 @@
                     submittedAt: Date.now() 
                 });
                 
-                // Update user stats
                 const userRef = db.ref('users/' + user.uid);
                 const userSnap = await userRef.once('value');
                 const userData = userSnap.val() || {};
@@ -714,38 +722,32 @@
                 await userRef.update({ totalTests, avgScore: newAvg, bestScore, badges });
                 await db.ref(`users/${user.uid}/completedTests/${currentTestId}`).set(true);
                 
-                // Update leaderboard immediately
-                if(currentLeaderboardPeriod) {
-                    await loadLeaderboardByPeriod(currentLeaderboardPeriod);
-                }
+                // Refresh everything
+                await loadLeaderboard();
+                await loadProfile();
+                await loadAvailableTests();
                 
-                showReview(score, questions.length, percent, userAnswers, correctAnswers, questionTexts, document.getElementById('testName').innerText);
+                document.getElementById('examPage').style.display = 'none';
+                showReview(score, questions.length, percent, userAnswers, correctAnswers, questionTexts);
+                showLoading(false);
             }
         }
 
-        function showReview(score, total, percent, userAnswers, correctAnswers, questions, testName) {
-            document.getElementById('examPage').style.display = 'none';
-            const reviewDiv = document.getElementById('reviewPage');
-            if(!reviewDiv) {
-                const div = document.createElement('div');
-                div.id = 'reviewPage';
-                div.className = 'custom-card';
-                div.style.position = 'fixed';
-                div.style.top = '0';
-                div.style.left = '0';
-                div.style.width = '100%';
-                div.style.height = '100%';
-                div.style.background = 'var(--primary-bg)';
-                div.style.zIndex = '2000';
-                div.style.overflowY = 'auto';
-                div.style.padding = '20px';
-                document.body.appendChild(div);
-            }
-            const reviewDivEl = document.getElementById('reviewPage');
-            reviewDivEl.style.display = 'block';
-            reviewDivEl.innerHTML = `
+        function showReview(score, total, percent, userAnswers, correctAnswers, questions) {
+            const reviewDiv = document.createElement('div');
+            reviewDiv.id = 'reviewPage';
+            reviewDiv.style.position = 'fixed';
+            reviewDiv.style.top = '0';
+            reviewDiv.style.left = '0';
+            reviewDiv.style.width = '100%';
+            reviewDiv.style.height = '100%';
+            reviewDiv.style.background = 'var(--primary-bg)';
+            reviewDiv.style.zIndex = '2000';
+            reviewDiv.style.overflowY = 'auto';
+            reviewDiv.style.padding = '20px';
+            reviewDiv.innerHTML = `
                 <div class="custom-card">
-                    <h2 style="color:var(--text-primary);">📝 टेस्ट रिजल्ट - ${testName}</h2>
+                    <h2 style="color:var(--text-primary);">📝 टेस्ट रिजल्ट - ${document.getElementById('testName').innerText}</h2>
                     <div class="text-center my-3">
                         <h3 style="color:var(--text-primary);">आपका स्कोर: <span style="color:var(--success);">${score}</span> / ${total}</h3>
                         <h4 style="color:var(--text-primary);">${percent.toFixed(1)}%</h4>
@@ -755,6 +757,8 @@
                     <button class="btn" style="background:var(--primary-button); color:white; width:100%; margin-top:16px; padding:12px; border-radius:50px;" onclick="closeReview()"><i class="bi bi-house-door"></i> होम पर जाएँ</button>
                 </div>
             `;
+            document.body.appendChild(reviewDiv);
+            
             let html = '';
             for(let i=0; i<questions.length; i++) {
                 let userAns = userAnswers[i] || '(छोड़ा)';
@@ -771,9 +775,8 @@
 
         function closeExam() { clearInterval(timerInterval); document.getElementById('examPage').style.display = 'none'; }
         function closeReview() { 
-            document.getElementById('reviewPage').style.display = 'none'; 
-            loadProfile(); 
-            loadAvailableTests(); 
+            const reviewDiv = document.getElementById('reviewPage');
+            if(reviewDiv) reviewDiv.remove();
             showSection('homeSection'); 
         }
         function logout() { auth.signOut(); location.reload(); }
@@ -786,6 +789,7 @@
                 document.getElementById('bottomNav').style.display = 'flex';
                 loadDashboard();
                 loadAppSettings();
+                loadLeaderboard();
                 showSection('homeSection');
             } else {
                 document.getElementById('loginSection').style.display = 'block';

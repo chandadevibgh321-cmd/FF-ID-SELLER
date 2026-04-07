@@ -9,12 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         :root {
             --primary-bg: #0F172A;
             --secondary-bg: #1E293B;
@@ -38,11 +33,7 @@
         body.light {
             background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
         }
-        body.light .custom-card,
-        body.light .login-card {
-            background: rgba(255, 255, 255, 0.95);
-            color: #1E293B;
-        }
+        body.light .custom-card, body.light .login-card { background: rgba(255,255,255,0.95); color: #1E293B; }
         .app-header {
             position: fixed; top: 0; left: 0; width: 100%; height: 65px;
             background: var(--secondary-bg); backdrop-filter: blur(10px);
@@ -87,80 +78,60 @@
             border-radius: 50px; font-size: 15px; background: rgba(255,255,255,0.95);
             transition: 0.3s;
         }
-        .login-card input:focus { outline: none; box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.3); transform: translateY(-2px); }
+        .login-card input:focus { outline: none; box-shadow: 0 0 0 3px rgba(250,204,21,0.3); transform: translateY(-2px); }
         .login-card button {
             width: 100%; padding: 14px; background: var(--accent-gradient);
             color: #1a1a2e; border: none; border-radius: 50px; font-size: 18px;
             font-weight: 700; cursor: pointer; margin-top: 15px; transition: 0.3s;
         }
-        .login-card button:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(250, 204, 21, 0.3); }
+        .login-card button:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(250,204,21,0.3); }
         .toggle-link { color: #FACC15; cursor: pointer; margin-top: 20px; display: inline-block; font-size: 0.9rem; font-weight: 500; }
         .toggle-link:hover { text-decoration: underline; }
         .error-msg { color: #ff6b6b; margin-top: 15px; font-size: 0.85rem; }
         .custom-card { background: var(--card-bg); border-radius: 24px; padding: 20px; margin-bottom: 16px; border: 1px solid var(--border-color); transition: 0.3s; }
-        .custom-card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         .section-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; color: var(--text-primary); }
         .test-card {
             background: var(--card-bg); border-radius: 20px; padding: 18px; margin-bottom: 14px;
             border: 1px solid var(--border-color); cursor: pointer; transition: 0.3s;
         }
-        .test-card:hover { transform: translateX(6px); border-color: var(--accent-color); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .test-card:hover { transform: translateX(6px); border-color: var(--accent-color); }
         .test-name { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); }
         .test-meta { font-size: 0.75rem; color: var(--text-secondary); display: flex; gap: 16px; margin: 10px 0; }
         .badge-available { background: linear-gradient(135deg, #10B981, #059669); color: white; padding: 4px 14px; border-radius: 50px; font-size: 0.7rem; font-weight: 600; display: inline-block; }
-        .profile-avatar { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid var(--accent-color); margin-bottom: 16px; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        .profile-avatar { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid var(--accent-color); margin-bottom: 16px; }
         .profile-stats { display: flex; justify-content: space-around; margin: 20px 0; gap: 12px; }
         .stat-item { text-align: center; flex: 1; background: rgba(255,255,255,0.05); padding: 12px; border-radius: 16px; }
         .stat-item strong { font-size: 1.4rem; display: block; color: var(--accent-color); }
         .stat-item span { color: var(--text-secondary); font-size: 0.75rem; }
-        /* Leaderboard Filters */
-        .leaderboard-filters {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
+        .leaderboard-filters { display: flex; gap: 12px; margin-bottom: 20px; }
         .filter-btn {
-            flex: 1;
-            padding: 10px 16px;
-            background: var(--secondary-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 40px;
-            color: var(--text-secondary);
-            cursor: pointer;
-            font-size: 0.85rem;
-            font-weight: 600;
-            transition: 0.3s;
+            flex: 1; padding: 10px 16px; background: var(--secondary-bg);
+            border: 1px solid var(--border-color); border-radius: 40px;
+            color: var(--text-secondary); cursor: pointer; font-size: 0.85rem;
+            font-weight: 600; transition: 0.3s;
         }
-        .filter-btn.active {
-            background: var(--accent-gradient);
-            color: #1a1a2e;
-            border-color: transparent;
-        }
+        .filter-btn.active { background: var(--accent-gradient); color: #1a1a2e; border-color: transparent; }
         .leaderboard-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px 0;
-            border-bottom: 1px solid var(--border-color);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 0; border-bottom: 1px solid var(--border-color);
         }
         .leaderboard-user { display: flex; align-items: center; gap: 12px; }
         .leaderboard-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
         .avatar-placeholder {
             width: 40px; height: 40px; border-radius: 50%;
-            background: var(--accent-gradient);
-            display: flex; align-items: center; justify-content: center;
-            color: #1a1a2e; font-weight: bold; font-size: 1.1rem;
+            background: var(--accent-gradient); display: flex; align-items: center;
+            justify-content: center; color: #1a1a2e; font-weight: bold; font-size: 1.1rem;
         }
         .rank-1 { background: linear-gradient(135deg, #FFD70020, transparent); border-left: 4px solid #FFD700; padding-left: 16px; border-radius: 12px; margin-left: -4px; }
         .rank-2 { background: linear-gradient(135deg, #C0C0C020, transparent); border-left: 4px solid #C0C0C0; padding-left: 16px; border-radius: 12px; margin-left: -4px; }
         .rank-3 { background: linear-gradient(135deg, #CD7F3220, transparent); border-left: 4px solid #CD7F32; padding-left: 16px; border-radius: 12px; margin-left: -4px; }
         .history-item { cursor: pointer; transition: 0.3s; }
         .history-item:hover { transform: translateX(6px); border-left-color: var(--accent-color); }
-        .timer { text-align: center; font-size: 2.2rem; font-weight: 800; color: var(--danger); margin-bottom: 20px; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 60px; letter-spacing: 2px; }
+        .timer { text-align: center; font-size: 2.2rem; font-weight: 800; color: var(--danger); margin-bottom: 20px; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 60px; }
         .progress-bar { background: var(--border-color); border-radius: 50px; height: 8px; margin-bottom: 24px; overflow: hidden; }
         .progress-fill { background: linear-gradient(90deg, var(--success), #34D399); width: 0%; height: 100%; transition: width 0.3s; }
         .question-box { background: var(--primary-bg); border-radius: 20px; padding: 24px; margin: 20px 0; }
-        .question-text { font-size: 1rem; font-weight: 600; margin-bottom: 20px; color: var(--text-primary); line-height: 1.4; }
+        .question-text { font-size: 1rem; font-weight: 600; margin-bottom: 20px; color: var(--text-primary); }
         .option {
             padding: 14px 20px; margin: 10px 0; background: var(--card-bg);
             border-radius: 60px; cursor: pointer; border: 1px solid var(--border-color);
@@ -194,7 +165,6 @@
         @media (max-width: 480px) {
             .main-content { padding: 16px; }
             .login-card { margin: 30px 20px; padding: 32px 24px; }
-            .test-name { font-size: 0.95rem; }
             .profile-avatar { width: 70px; height: 70px; }
             .filter-btn { padding: 8px 12px; font-size: 0.75rem; }
         }
@@ -383,7 +353,6 @@
             item.addEventListener('click', () => showSection(item.dataset.section));
         });
 
-        // Leaderboard Filter Buttons
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -409,7 +378,6 @@
                     }
                 });
             } else {
-                // For weekly/monthly, filter results by date
                 const resultsSnap = await db.ref('results').once('value');
                 const now = Date.now();
                 const weekAgo = now - 7 * 24 * 60 * 60 * 1000;
@@ -436,7 +404,7 @@
                     const userSnap = await db.ref('users/' + userId).once('value');
                     const userData = userSnap.val();
                     if(userData) {
-                        const avgScore = scores.totalScore / scores.totalTests;
+                        const avgScore = scores.totalTests > 0 ? scores.totalScore / scores.totalTests : 0;
                         users.push({
                             name: userData.fullName || userData.username,
                             avgScore: avgScore,
@@ -568,10 +536,10 @@
             
             let badges = userData.badges || [];
             let badgeHtml = '';
-            if(badges.includes('gold')) badgeHtml += '<span class="badge" style="background:#FFD700; color:#1a1a2e; padding:4px 10px; border-radius:20px; margin:2px; font-weight:600;">🏅 गोल्ड</span>';
-            if(badges.includes('silver')) badgeHtml += '<span class="badge" style="background:#C0C0C0; color:#1a1a2e; padding:4px 10px; border-radius:20px; margin:2px; font-weight:600;">🥈 सिल्वर</span>';
-            if(badges.includes('bronze')) badgeHtml += '<span class="badge" style="background:#CD7F32; color:white; padding:4px 10px; border-radius:20px; margin:2px; font-weight:600;">🥉 ब्रॉन्ज</span>';
-            if(badges.includes('iron')) badgeHtml += '<span class="badge" style="background:#4B5563; color:white; padding:4px 10px; border-radius:20px; margin:2px; font-weight:600;">🔥 आयरन</span>';
+            if(badges.includes('gold')) badgeHtml += '<span class="badge" style="background:#FFD700; color:#1a1a2e; padding:4px 10px; border-radius:20px; margin:2px;">🏅 गोल्ड</span>';
+            if(badges.includes('silver')) badgeHtml += '<span class="badge" style="background:#C0C0C0; color:#1a1a2e; padding:4px 10px; border-radius:20px; margin:2px;">🥈 सिल्वर</span>';
+            if(badges.includes('bronze')) badgeHtml += '<span class="badge" style="background:#CD7F32; color:white; padding:4px 10px; border-radius:20px; margin:2px;">🥉 ब्रॉन्ज</span>';
+            if(badges.includes('iron')) badgeHtml += '<span class="badge" style="background:#4B5563; color:white; padding:4px 10px; border-radius:20px; margin:2px;">🔥 आयरन</span>';
             document.getElementById('badgesEarned').innerHTML = badgeHtml || 'कोई बैज नहीं';
             
             let avg = userData.avgScore || 0;
@@ -589,11 +557,12 @@
             resultsSnap.forEach(r => { 
                 const result = r.val();
                 allResults.push(result);
-                html += `<div class="custom-card history-item" onclick='showResultDetails(${JSON.stringify(result).replace(/'/g, "&apos;")})'>
+                const resultData = JSON.stringify(result).replace(/'/g, "&apos;");
+                html += `<div class="custom-card history-item">
                     <strong style="color:var(--text-primary);">${result.testName}</strong><br>
                     <span style="color:var(--text-primary);">स्कोर: ${result.score}/${result.total} (${result.percent.toFixed(1)}%)</span><br>
                     <small style="color:var(--text-secondary);">${new Date(result.submittedAt).toLocaleString()}</small>
-                    <div class="mt-2"><button class="btn" style="background:var(--primary-button); color:white; padding:4px 12px; border-radius:20px; font-size:0.7rem;" onclick="event.stopPropagation(); showResultDetails(${JSON.stringify(result).replace(/'/g, "&apos;")})"><i class="bi bi-eye"></i> See Results</button></div>
+                    <div class="mt-2"><button class="btn" style="background:var(--primary-button); color:white; padding:4px 12px; border-radius:20px; font-size:0.7rem;" onclick='showResultDetails(${resultData})'><i class="bi bi-eye"></i> See Results</button></div>
                 </div>`;
             });
             document.getElementById('testHistoryList').innerHTML = html || '<div class="custom-card">कोई टेस्ट नहीं दिया</div>';
@@ -653,8 +622,11 @@
             currentTestId = testKey;
             const testSnap = await db.ref(`tests/${testKey}`).once('value');
             const test = testSnap.val();
-            questions = []; Object.keys(test.questions || {}).forEach(k => questions.push(test.questions[k]));
-            questions.sort((a,b) => a.id - b.id);
+            questions = []; 
+            if(test.questions) {
+                Object.keys(test.questions).forEach(k => questions.push(test.questions[k]));
+                questions.sort((a,b) => a.id - b.id);
+            }
             userAnswers = new Array(questions.length).fill(null);
             timeLeft = (test.timeMinutes || 90) * 60;
             currentQ = 0;
@@ -683,12 +655,16 @@
             if(!questions.length) return;
             let q = questions[currentQ];
             let html = `<div class="question-box"><div class="question-text">${currentQ+1}. ${q.text}</div>`;
-            q.options.forEach(opt => { let isSelected = (userAnswers[currentQ] === opt); html += `<div class="option ${isSelected ? 'selected' : ''}" onclick="selectAnswer('${opt.replace(/'/g, "\\'")}')">${opt}</div>`; });
+            q.options.forEach(opt => { 
+                let isSelected = (userAnswers[currentQ] === opt);
+                html += `<div class="option ${isSelected ? 'selected' : ''}" onclick="selectAnswer('${opt.replace(/'/g, "\\'")}')">${opt}</div>`;
+            });
             html += `</div>`;
             document.getElementById('questionContainer').innerHTML = html;
             document.getElementById('qCounter').innerHTML = `प्रश्न ${currentQ+1} / ${questions.length}`;
             document.getElementById('progressFill').style.width = ((currentQ+1)/questions.length)*100 + '%';
         }
+
         function selectAnswer(ans) { userAnswers[currentQ] = ans; renderQuestion(); }
         function nextQuestion() { if(currentQ < questions.length-1) { currentQ++; renderQuestion(); } else alert('आखिरी प्रश्न'); }
         function prevQuestion() { if(currentQ > 0) { currentQ--; renderQuestion(); } }
@@ -696,7 +672,9 @@
         async function submitExam() {
             if(confirm('सबमिट करें? बाद में बदलाव नहीं होंगे')) {
                 clearInterval(timerInterval);
-                let score = 0, correctAnswers = [], questionTexts = [];
+                let score = 0;
+                let correctAnswers = [];
+                let questionTexts = [];
                 for(let i=0; i<questions.length; i++) {
                     correctAnswers.push(questions[i].correct);
                     questionTexts.push(questions[i].text);
@@ -704,7 +682,22 @@
                 }
                 const percent = (score/questions.length)*100;
                 const user = auth.currentUser;
-                await db.ref('results').push({ userId: user.uid, testId: currentTestId, testName: document.getElementById('testName').innerText.replace(/[^a-zA-Z0-9 ]/g, '').trim(), score: score, total: questions.length, percent: percent, answers: userAnswers, correctAnswers: correctAnswers, questions: questionTexts, submittedAt: Date.now() });
+                
+                // Save result
+                await db.ref('results').push({ 
+                    userId: user.uid, 
+                    testId: currentTestId, 
+                    testName: document.getElementById('testName').innerText.replace(/[^a-zA-Z0-9 ]/g, '').trim(), 
+                    score: score, 
+                    total: questions.length, 
+                    percent: percent, 
+                    answers: userAnswers, 
+                    correctAnswers: correctAnswers, 
+                    questions: questionTexts, 
+                    submittedAt: Date.now() 
+                });
+                
+                // Update user stats
                 const userRef = db.ref('users/' + user.uid);
                 const userSnap = await userRef.once('value');
                 const userData = userSnap.val() || {};
@@ -717,33 +710,72 @@
                 if(percent >= 75 && !badges.includes('silver')) badges.push('silver');
                 if(percent >= 60 && !badges.includes('bronze')) badges.push('bronze');
                 if(totalTests >= 5 && !badges.includes('iron')) badges.push('iron');
+                
                 await userRef.update({ totalTests, avgScore: newAvg, bestScore, badges });
                 await db.ref(`users/${user.uid}/completedTests/${currentTestId}`).set(true);
+                
+                // Update leaderboard immediately
+                if(currentLeaderboardPeriod) {
+                    await loadLeaderboardByPeriod(currentLeaderboardPeriod);
+                }
+                
                 showReview(score, questions.length, percent, userAnswers, correctAnswers, questionTexts, document.getElementById('testName').innerText);
             }
         }
 
         function showReview(score, total, percent, userAnswers, correctAnswers, questions, testName) {
             document.getElementById('examPage').style.display = 'none';
-            document.getElementById('reviewPage').style.display = 'block';
-            document.getElementById('reviewTestName').innerText = testName;
-            document.getElementById('reviewScore').innerText = score;
-            document.getElementById('reviewTotal').innerText = total;
-            document.getElementById('reviewPercentage').innerHTML = `${percent.toFixed(1)}%`;
-            let badgeMsg = percent >= 90 ? '🏆 शानदार! गोल्ड मेडल!' : (percent >= 75 ? '🥈 बहुत अच्छा! सिल्वर मेडल!' : (percent >= 60 ? '🥉 अच्छा! ब्रॉन्ज मेडल!' : '💪 अगली बार और मेहनत करो!'));
-            document.getElementById('reviewBadge').innerHTML = `<div style="background:rgba(0,0,0,0.2); padding:12px; border-radius:16px;">${badgeMsg}</div>`;
+            const reviewDiv = document.getElementById('reviewPage');
+            if(!reviewDiv) {
+                const div = document.createElement('div');
+                div.id = 'reviewPage';
+                div.className = 'custom-card';
+                div.style.position = 'fixed';
+                div.style.top = '0';
+                div.style.left = '0';
+                div.style.width = '100%';
+                div.style.height = '100%';
+                div.style.background = 'var(--primary-bg)';
+                div.style.zIndex = '2000';
+                div.style.overflowY = 'auto';
+                div.style.padding = '20px';
+                document.body.appendChild(div);
+            }
+            const reviewDivEl = document.getElementById('reviewPage');
+            reviewDivEl.style.display = 'block';
+            reviewDivEl.innerHTML = `
+                <div class="custom-card">
+                    <h2 style="color:var(--text-primary);">📝 टेस्ट रिजल्ट - ${testName}</h2>
+                    <div class="text-center my-3">
+                        <h3 style="color:var(--text-primary);">आपका स्कोर: <span style="color:var(--success);">${score}</span> / ${total}</h3>
+                        <h4 style="color:var(--text-primary);">${percent.toFixed(1)}%</h4>
+                        <div style="background:rgba(0,0,0,0.2); padding:12px; border-radius:16px;">${percent >= 90 ? '🏆 शानदार! गोल्ड मेडल!' : (percent >= 75 ? '🥈 बहुत अच्छा! सिल्वर मेडल!' : (percent >= 60 ? '🥉 अच्छा! ब्रॉन्ज मेडल!' : '💪 अगली बार और मेहनत करो!'))}</div>
+                    </div>
+                    <div id="reviewQuestionsList"></div>
+                    <button class="btn" style="background:var(--primary-button); color:white; width:100%; margin-top:16px; padding:12px; border-radius:50px;" onclick="closeReview()"><i class="bi bi-house-door"></i> होम पर जाएँ</button>
+                </div>
+            `;
             let html = '';
             for(let i=0; i<questions.length; i++) {
                 let userAns = userAnswers[i] || '(छोड़ा)';
                 let correct = correctAnswers[i];
                 let isCorrect = userAnswers[i] === correct;
-                html += `<div style="border-bottom:1px solid var(--border-color); padding-bottom:12px; margin-bottom:12px;"><strong style="color:var(--text-primary);">प्रश्न ${i+1}:</strong> ${questions[i]}<br><span style="color:${isCorrect ? 'var(--success)' : 'var(--danger)'}">👉 आपका: ${userAns}</span><br><span style="color:var(--success);">✅ सही: ${correct}</span></div>`;
+                html += `<div style="border-bottom:1px solid var(--border-color); padding-bottom:12px; margin-bottom:12px;">
+                    <strong style="color:var(--text-primary);">प्रश्न ${i+1}:</strong> ${questions[i]}<br>
+                    <span style="color:${isCorrect ? 'var(--success)' : 'var(--danger)'}">👉 आपका: ${userAns}</span><br>
+                    <span style="color:var(--success);">✅ सही: ${correct}</span>
+                </div>`;
             }
             document.getElementById('reviewQuestionsList').innerHTML = html;
         }
 
         function closeExam() { clearInterval(timerInterval); document.getElementById('examPage').style.display = 'none'; }
-        function closeReview() { document.getElementById('reviewPage').style.display = 'none'; loadProfile(); loadAvailableTests(); showSection('homeSection'); }
+        function closeReview() { 
+            document.getElementById('reviewPage').style.display = 'none'; 
+            loadProfile(); 
+            loadAvailableTests(); 
+            showSection('homeSection'); 
+        }
         function logout() { auth.signOut(); location.reload(); }
 
         auth.onAuthStateChanged(user => {
